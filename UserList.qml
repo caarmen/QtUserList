@@ -24,7 +24,6 @@ ApplicationWindow {
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.fill: parent
-        Flickable {
             ListView {
                 id: userList
                 Layout.fillWidth: true
@@ -42,5 +41,4 @@ ApplicationWindow {
             x: Math.round((parent.width - width) / 2)
             y: Math.round((parent.height - height) / 2)
         }
-    }
 }
