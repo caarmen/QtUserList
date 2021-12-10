@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>UserList.qml</file>
+        <file>UserListItemDelegate.qml</file>
+        <file>UserDetailsDialog.qml</file>
+    </qresource>
+</RCC>
