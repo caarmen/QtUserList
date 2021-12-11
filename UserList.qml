@@ -11,7 +11,7 @@ ApplicationWindow {
         RowLayout {
             anchors.fill: parent
             Label {
-                text: "Random user list"
+                text: qsTr("AppTitle")
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
                 Layout.fillWidth: true
@@ -44,7 +44,7 @@ ApplicationWindow {
                 Text {
                     visible: userListModel.isError
                     anchors.fill: parent
-                    text: "Oops, something went wrong!"
+                    text: qsTr("ErrorLoadingUsers")
                     color: "white"
                     horizontalAlignment: Qt.AlignHCenter
                     verticalAlignment: Qt.AlignVCenter

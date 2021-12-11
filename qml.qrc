@@ -3,5 +3,6 @@
         <file>UserList.qml</file>
         <file>UserListItemDelegate.qml</file>
         <file>UserDetailsDialog.qml</file>
+        <file>translations_en.qm</file>
     </qresource>
 </RCC>
