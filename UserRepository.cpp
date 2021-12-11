@@ -18,7 +18,9 @@ void UserRepository::fetchUsers(int page, int size)
     QNetworkRequest request;
     request.setUrl(QUrl(endpoint));
     QNetworkReply *reply = netMgr->get(request);
-    QObject::connect(reply, &QNetworkReply::finished, this, [=](){
+    QObject *context = new QObject(this);
+    QObject::connect(reply, &QNetworkReply::finished, context, [=](){
+        context->deleteLater();
         if (reply->error()) {
             qDebug() << reply->errorString();
             return;
