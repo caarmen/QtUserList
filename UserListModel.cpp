@@ -2,11 +2,16 @@
 #include "UserRepository.h"
 #include "UserDisplayDataDeserializer.h"
 
-UserListModel::UserListModel(QCoreApplication *app, QObject *parent)
-    : QAbstractListModel{parent}, app(app)
+UserListModel::UserListModel(QObject *parent)
+    : QAbstractListModel{parent}
 {
+    repo = new UserRepository();
+    isLoading = false;
 }
 
+UserListModel::~UserListModel() {
+    repo->deleteLater();
+}
 QHash<int,QByteArray> UserListModel::roleNames() const {
     return { { UserRole, "user" },
     };
@@ -43,12 +48,16 @@ void UserListModel::fetchMore(const QModelIndex &parent)
     int insertFrom = userList.size();
     int insertCount = userList.size() + PAGE_SIZE;
 
-    beginInsertRows(parent, insertFrom, insertCount - 1);
-
-    UserRepository repo;
-    QJsonArray usersJson = repo.fetchUsersBlocking(app, page, PAGE_SIZE);
-    QList<UserDisplayData*> *nextUsers = UserDisplayDataDeserializer::parse(usersJson);
-    userList.append(*nextUsers);
-
-    endInsertRows();
+    if(!isLoading) {
+        isLoading = true;
+        QObject::connect(repo, &UserRepository::onUsersFetched, this, [=](QJsonArray usersJson) {
+            QObject::disconnect(repo, &UserRepository::onUsersFetched, 0, 0);
+            QList<UserDisplayData*> *nextUsers = UserDisplayDataDeserializer::parse(usersJson);
+            beginInsertRows(parent, insertFrom, insertCount - 1);
+            userList.append(*nextUsers);
+            endInsertRows();
+            isLoading = false;
+        });
+        repo->fetchUsers(page, PAGE_SIZE);
+    }
 }

@@ -5,25 +5,31 @@
 #include <QJsonDocument>
 #include <QCoreApplication>
 
-UserRepository::UserRepository() {
-
+UserRepository::UserRepository(QObject *parent) : QObject(parent) {
+    netMgr = new QNetworkAccessManager();
 }
 
-QJsonArray UserRepository::fetchUsersBlocking(const QCoreApplication *app, int page, int size) const
+UserRepository::~UserRepository() {
+    netMgr->deleteLater();
+}
+void UserRepository::fetchUsers(int page, int size)
 {
-    QString endpoint = "https://randomuser.me/api/?results=" + QString::number(size) + "&page=" + QString::number(page) + "&seed=abc";
+    QString endpoint = QString("https://randomuser.me/api/?results=%1&page=%2&seed=abc").arg(QString::number(size), QString::number(page));
     QNetworkRequest request;
     request.setUrl(QUrl(endpoint));
-    QNetworkAccessManager restClient;
-    QNetworkReply *reply = restClient.get(request);
-    // TODO we should return a Future instead of the result directly, instead
-    // of processing events like this here
-    while (!reply->isFinished()) {
-        app->processEvents();
-    }
-    QByteArray responseData = reply->readAll();
-    QJsonDocument json = QJsonDocument::fromJson(responseData);
-    QJsonArray usersJson = json["results"].toArray();
-    reply->deleteLater();
-    return usersJson;
+    QNetworkReply *reply = netMgr->get(request);
+    QObject::connect(reply, &QNetworkReply::finished, this, [=](){
+        if (reply->error()) {
+            qDebug() << reply->errorString();
+            return;
+        }
+
+        QByteArray responseData = reply->readAll();
+        QJsonDocument json = QJsonDocument::fromJson(responseData);
+        QJsonArray usersJson = json["results"].toArray();
+        reply->deleteLater();
+        if(!usersJson.empty()) {
+            emit onUsersFetched(usersJson);
+        }
+    });
 }
