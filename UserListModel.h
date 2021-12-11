@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 #include <UserDisplayData.h>
-#include <QCoreApplication>
+#include <UserRepository.h>
 
 class UserListModel : public QAbstractListModel
 {
@@ -13,7 +13,8 @@ public:
         UserRole = Qt::UserRole + 1,
     };
 
-    UserListModel(QCoreApplication *app, QObject *parent = nullptr);
+    explicit UserListModel(QObject *parent = nullptr);
+    ~UserListModel();
 
     QHash<int,QByteArray> roleNames() const override;
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -24,9 +25,10 @@ protected:
     void fetchMore(const QModelIndex &parent) override;
 
 private:
+    UserRepository *repo;
     QList<UserDisplayData*> userList;
-    QCoreApplication *app;
     static const int PAGE_SIZE = 50;
+    bool isLoading;
 };
 
 #endif // USERLISTMODEL_H
