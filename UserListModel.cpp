@@ -50,8 +50,9 @@ void UserListModel::fetchMore(const QModelIndex &parent)
 
     if(!isLoading) {
         isLoading = true;
-        QObject::connect(repo, &UserRepository::onUsersFetched, this, [=](QJsonArray usersJson) {
-            QObject::disconnect(repo, &UserRepository::onUsersFetched, 0, 0);
+        QObject *context = new QObject(this);
+        QObject::connect(repo, &UserRepository::onUsersFetched, context, [=](QJsonArray usersJson) {
+            context->deleteLater();
             QList<UserDisplayData*> *nextUsers = UserDisplayDataDeserializer::parse(usersJson);
             beginInsertRows(parent, insertFrom, insertCount - 1);
             userList.append(*nextUsers);
