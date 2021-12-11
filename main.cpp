@@ -4,6 +4,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QtCore>
+#include <QQuickStyle>
 #include <QtQuick/QQuickView>
 #include <UserDisplayData.h>
 #include <UserDisplayDataDeserializer.h>
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
     UserListModel userListModel(&a);
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("userListModel", QVariant::fromValue(&userListModel));
+    QQuickStyle::setStyle("Material");
     engine.load(QUrl("qrc:/UserList.qml"));
 
     return a.exec();

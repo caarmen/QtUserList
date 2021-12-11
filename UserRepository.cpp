@@ -22,16 +22,13 @@ void UserRepository::fetchUsers(int page, int size)
     QObject::connect(reply, &QNetworkReply::finished, context, [=](){
         context->deleteLater();
         if (reply->error()) {
-            qDebug() << reply->errorString();
-            return;
-        }
-
-        QByteArray responseData = reply->readAll();
-        QJsonDocument json = QJsonDocument::fromJson(responseData);
-        QJsonArray usersJson = json["results"].toArray();
-        reply->deleteLater();
-        if(!usersJson.empty()) {
-            emit onUsersFetched(usersJson);
+            emit onUsersFetched({false, QJsonArray()});
+        } else {
+            QByteArray responseData = reply->readAll();
+            QJsonDocument json = QJsonDocument::fromJson(responseData);
+            QJsonArray usersJson = json["results"].toArray();
+            reply->deleteLater();
+            emit onUsersFetched({true, usersJson});
         }
     });
 }
