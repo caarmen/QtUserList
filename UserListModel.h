@@ -8,6 +8,8 @@
 class UserListModel : public QAbstractListModel
 {
     Q_OBJECT
+    Q_PROPERTY(bool isLoading MEMBER isLoading NOTIFY isLoadingChanged)
+    Q_PROPERTY(bool isError MEMBER isError NOTIFY isErrorChanged)
 public:
     enum MyRoles {
         UserRole = Qt::UserRole + 1,
@@ -29,6 +31,11 @@ private:
     QList<UserDisplayData*> userList;
     static const int PAGE_SIZE = 50;
     bool isLoading;
+    bool isError;
+
+signals:
+    void isLoadingChanged(const bool &isLoading);
+    void isErrorChanged(const bool &isError);
 };
 
 #endif // USERLISTMODEL_H

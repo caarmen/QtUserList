@@ -7,6 +7,7 @@ UserListModel::UserListModel(QObject *parent)
 {
     repo = new UserRepository();
     isLoading = false;
+    isError = false;
 }
 
 UserListModel::~UserListModel() {
@@ -50,14 +51,20 @@ void UserListModel::fetchMore(const QModelIndex &parent)
 
     if(!isLoading) {
         isLoading = true;
+        emit isLoadingChanged(isLoading);
         QObject *context = new QObject(this);
-        QObject::connect(repo, &UserRepository::onUsersFetched, context, [=](QJsonArray usersJson) {
+        QObject::connect(repo, &UserRepository::onUsersFetched, context, [=](UserRepositoryResult result) {
             context->deleteLater();
-            QList<UserDisplayData*> *nextUsers = UserDisplayDataDeserializer::parse(usersJson);
-            beginInsertRows(parent, insertFrom, insertCount - 1);
-            userList.append(*nextUsers);
-            endInsertRows();
+            if (result.isSuccess) {
+                QList<UserDisplayData*> *nextUsers = UserDisplayDataDeserializer::parse(result.usersJson);
+                beginInsertRows(parent, insertFrom, insertCount - 1);
+                userList.append(*nextUsers);
+                endInsertRows();
+            }
             isLoading = false;
+            isError = !result.isSuccess;
+            emit isErrorChanged(isError);
+            emit isLoadingChanged(isLoading);
         });
         repo->fetchUsers(page, PAGE_SIZE);
     }

@@ -6,6 +6,11 @@
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
 
+struct UserRepositoryResult {
+    bool isSuccess;
+    QJsonArray usersJson;
+};
+
 class UserRepository : public QObject
 {
     Q_OBJECT
@@ -15,7 +20,7 @@ public:
     void fetchUsers(int page, int size);
 
 signals:
-    void onUsersFetched(QJsonArray usersJson);
+    void onUsersFetched(UserRepositoryResult result);
 
 private:
     QNetworkAccessManager *netMgr;
