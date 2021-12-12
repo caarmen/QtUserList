@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>ErrorLoadingUsers</source>
-        <translation>Oops! Something went wrong 🙀</translation>
+        <translation>Oops! Something went wrong... 🙀</translation>
     </message>
 </context>
 </TS>
