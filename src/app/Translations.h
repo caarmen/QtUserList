@@ -10,7 +10,7 @@ class Translations : public QObject
     Q_OBJECT
 public:
     explicit Translations(QObject *parent = nullptr);
-    QTranslator* load(QCoreApplication &app);
+    QTranslator* load();
 };
 
 #endif // TRANSLATIONS_H

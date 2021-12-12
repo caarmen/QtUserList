@@ -2,8 +2,8 @@
 #define USERLISTMODEL_H
 
 #include <QAbstractListModel>
-#include <UserDisplayData.h>
-#include <UserRepository.h>
+#include <viewmodel/UserDisplayData.h>
+#include <model/UserRepository.h>
 
 class UserListModel : public QAbstractListModel
 {
