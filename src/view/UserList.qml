@@ -8,6 +8,8 @@ ApplicationWindow {
     height: 500
     visible: true
     Material.theme: Material.System
+    Material.primary: Material.Teal
+    Material.accent: Material.Brown
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
