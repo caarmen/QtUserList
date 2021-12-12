@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Translations.cpp \
     UserDisplayData.cpp \
     UserDisplayDataDeserializer.cpp \
     UserListModel.cpp \
@@ -25,7 +26,11 @@ RESOURCES += \
     qml.qrc
 
 HEADERS += \
+    Translations.h \
     UserDisplayData.h \
     UserDisplayDataDeserializer.h \
     UserListModel.h \
     UserRepository.h
+
+TRANSLATIONS += \
+    translations_en.ts
