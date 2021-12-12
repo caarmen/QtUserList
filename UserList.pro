@@ -2,7 +2,7 @@ QT       += core gui quick concurrent quickcontrols2
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++11 app_bundle
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -16,11 +16,29 @@ SOURCES += \
     src/viewmodel/UserDisplayDataDeserializer.cpp \
     src/viewmodel/UserListModel.cpp \
 
+TARGET=QUserList
+TEMPLATE=app
+
+BUILD_DIR=build
+TMP_DIR=$${BUILD_DIR}/tmp
+
+MOC_DIR=$${TMP_DIR}/moc
+RCC_DIR=$${TMP_DIR}/rcc
+UI_DIR=$${TMP_DIR}/ui
+OBJECTS_DIR=$${TMP_DIR}/obj
+
+DESTDIR=$${BUILD_DIR}/out
+
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+DMGFILE=$${DESTDIR}/QUserList.dmg
+dmgfile.target = $${DMGFILE}
+dmgfile.commands = macdeployqt $${DESTDIR}/QUserList.app -qmldir=$${PWD} -qmlimport=$${PWD} -dmg
+QMAKE_EXTRA_TARGETS += dmgfile
 
 RESOURCES += \
     qml.qrc
@@ -35,3 +53,6 @@ HEADERS += \
 
 TRANSLATIONS += \
     i18n/src/translations_en.ts
+
+POST_TARGETDEPS += $${DMGFILE}
+
