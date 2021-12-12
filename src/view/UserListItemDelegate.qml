@@ -27,6 +27,7 @@ ItemDelegate {
             spacing: 0
             anchors.fill: parent
             Rectangle {
+                color: Material.backgroundColor
                 width: 50
                 height: 50
                 Image {
@@ -37,9 +38,11 @@ ItemDelegate {
             Rectangle {
                 id: name
                 height: 50
+                color: Material.backgroundColor
                 Layout.alignment: Qt.AlignCenter
                 Layout.fillWidth: true
                 Text {
+                    color: Material.primaryTextColor
                     anchors.leftMargin: 16
                     anchors.fill: parent
                     verticalAlignment: Text.AlignVCenter

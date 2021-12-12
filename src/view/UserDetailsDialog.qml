@@ -12,6 +12,7 @@ Dialog {
 
     contentItem:
         Rectangle {
+        color: Material.backgroundColor
         ColumnLayout{
             RowLayout {
                 Image {
@@ -21,6 +22,7 @@ Dialog {
             }
             RowLayout {
                 Text {
+                    color: Material.primaryTextColor
                     id: userName
                     text: userDisplayData ? userDisplayData.name : ""
                     Layout.fillWidth: true
@@ -31,6 +33,7 @@ Dialog {
             RowLayout {
                 Text {
                     id: phone
+                    color: Material.primaryTextColor
                     text: userDisplayData ? userDisplayData.phone : ""
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignHCenter
