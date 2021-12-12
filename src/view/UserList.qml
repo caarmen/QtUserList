@@ -3,10 +3,11 @@ import QtQuick.Controls 2.4
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material 2.12
 ApplicationWindow {
-    color: "white"
+    color: Material.backgroundColor
     width: 500
     height: 500
     visible: true
+    Material.theme: Material.System
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
