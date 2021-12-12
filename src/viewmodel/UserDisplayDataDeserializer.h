@@ -1,6 +1,6 @@
 #ifndef USERDISPLAYDATADESERIALIZER_H
 #define USERDISPLAYDATADESERIALIZER_H
-#include <UserDisplayData.h>
+#include <viewmodel/UserDisplayData.h>
 #include <QJsonArray>
 #include <QJsonObject>
 

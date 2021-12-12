@@ -1,5 +1,5 @@
-#include "UserDisplayDataDeserializer.h"
-#include "UserDisplayData.h"
+#include <viewmodel/UserDisplayDataDeserializer.h>
+#include <viewmodel/UserDisplayData.h>
 #include <QJsonObject>
 
 QList<UserDisplayData*>* UserDisplayDataDeserializer::parse(QJsonArray usersJson)

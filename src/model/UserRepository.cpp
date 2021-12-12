@@ -1,9 +1,9 @@
-#include "UserRepository.h"
+#include <QCoreApplication>
+#include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-#include <QJsonDocument>
-#include <QCoreApplication>
+#include <model/UserRepository.h>
 
 UserRepository::UserRepository(QObject *parent) : QObject(parent) {
     netMgr = new QNetworkAccessManager();

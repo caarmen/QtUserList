@@ -1,6 +1,6 @@
-#include "UserListModel.h"
-#include "UserRepository.h"
-#include "UserDisplayDataDeserializer.h"
+#include <model/UserRepository.h>
+#include <viewmodel/UserDisplayDataDeserializer.h>
+#include <viewmodel/UserListModel.h>
 
 UserListModel::UserListModel(QObject *parent)
     : QAbstractListModel{parent}
