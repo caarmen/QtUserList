@@ -16,7 +16,6 @@ SOURCES += \
     src/viewmodel/UserDisplayDataDeserializer.cpp \
     src/viewmodel/UserListModel.cpp \
 
-TARGET=QUserList
 TEMPLATE=app
 
 BUILD_DIR=build
@@ -35,9 +34,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-DMGFILE=$${DESTDIR}/QUserList.dmg
+DMGFILE=$${DESTDIR}/UserList.dmg
 dmgfile.target = $${DMGFILE}
-dmgfile.commands = macdeployqt $${DESTDIR}/QUserList.app -qmldir=$${PWD} -qmlimport=$${PWD} -dmg
+dmgfile.commands = macdeployqt $${DESTDIR}/UserList.app -qmldir=$${PWD} -qmlimport=$${PWD} -dmg
 QMAKE_EXTRA_TARGETS += dmgfile
 
 RESOURCES += \
@@ -53,6 +52,3 @@ HEADERS += \
 
 TRANSLATIONS += \
     i18n/src/translations_en.ts
-
-POST_TARGETDEPS += $${DMGFILE}
-
